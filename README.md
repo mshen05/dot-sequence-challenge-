@@ -20,16 +20,6 @@ A fast-paced browser game that tests your hand-eye coordination and concentratio
 - **B Grade**: Good performance with minor mistakes
 - **C-F Grades**: Room for improvement!
 
-## 🚀 Play Now
-
-[**Play the Game**](https://mshen05.github.io/dot-sequence-challenge)
-
-## 🛠️ Technologies Used
-
-- **HTML5**: Game structure and canvas
-- **CSS3**: Responsive design with animations and glassmorphism effects
-- **Vanilla JavaScript**: Game logic, DOM manipulation, and timer system
-
 ## 🎯 Features
 
 - ✅ 30 randomly positioned dots with collision detection
