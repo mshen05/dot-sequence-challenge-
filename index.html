@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot Sequence Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .instructions {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+        }
+
+        .game-container {
+            position: relative;
+            width: 90vw;
+            max-width: 800px;
+            height: 70vh;
+            min-height: 500px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            overflow: hidden;
+        }
+
+        .dot {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            user-select: none;
+        }
+
+        .dot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .dot.clicked {
+            background: #51cf66;
+            transform: scale(0.8);
+            opacity: 0.7;
+        }
+
+        .dot.wrong {
+            background: #ff5252;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #4ecdc4;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .grade {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .grade.S { color: #ffd700; }
+        .grade.A { color: #51cf66; }
+        .grade.B { color: #4ecdc4; }
+        .grade.C { color: #ffa94d; }
+        .grade.D { color: #ff6b6b; }
+        .grade.F { color: #ff5252; }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .dot {
+                width: 35px;
+                height: 35px;
+                font-size: 12px;
+            }
+            
+            .game-stats {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Dot Sequence Challenge</h1>
+    </div>
+
+    <div class="instructions">
+        <p>Click the numbered dots in order from 1 to 30 as quickly and accurately as possible!</p>
+        <p>Your time and accuracy will determine your grade.</p>
+    </div>
+
+    <div class="game-stats">
+        <div class="stat">
+            <span>Timer: </span>
+            <span id="timer">0.0s</span>
+        </div>
+        <div class="stat">
+            <span>Next: </span>
+            <span id="nextNumber">1</span>
+        </div>
+        <div class="stat">
+            <span>Mistakes: </span>
+            <span id="mistakes">0</span>
+        </div>
+    </div>
+
+    <div class="game-container" id="gameContainer"></div>
+
+    <div class="controls">
+        <button class="btn" id="startBtn">Start Game</button>
+        <button class="btn" id="resetBtn" disabled>Reset</button>
+    </div>
+
+    <div class="results hidden" id="results">
+        <h2>Game Complete!</h2>
+        <div class="grade" id="finalGrade">A</div>
+        <p>Time: <span id="finalTime">0.0</span> seconds</p>
+        <p>Mistakes: <span id="finalMistakes">0</span></p>
+        <p id="gradeMessage">Excellent work!</p>
+    </div>
+
+    <script>
+        class DotSequenceGame {
+            constructor() {
+                this.gameContainer = document.getElementById('gameContainer');
+                this.timerDisplay = document.getElementById('timer');
+                this.nextNumberDisplay = document.getElementById('nextNumber');
+                this.mistakesDisplay = document.getElementById('mistakes');
+                this.startBtn = document.getElementById('startBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.results = document.getElementById('results');
+                
+                this.dots = [];
+                this.currentNumber = 1;
+                this.mistakes = 0;
+                this.startTime = null;
+                this.endTime = null;
+                this.gameActive = false;
+                this.timerInterval = null;
+                
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                this.startBtn.addEventListener('click', () => this.startGame());
+                this.resetBtn.addEventListener('click', () => this.resetGame());
+            }
+
+            startGame() {
+                this.resetGame();
+                this.generateDots();
+                this.gameActive = true;
+                this.startBtn.disabled = true;
+                this.resetBtn.disabled = false;
+                this.results.classList.add('hidden');
+            }
+
+            generateDots() {
+                const containerRect = this.gameContainer.getBoundingClientRect();
+                const containerWidth = containerRect.width - 60; // Account for dot size and padding
+                const containerHeight = containerRect.height - 60;
+                const minDistance = 60; // Minimum distance between dots
+
+                this.dots = [];
+                const positions = [];
+
+                for (let i = 1; i <= 30; i++) {
+                    let position;
+                    let attempts = 0;
+                    
+                    do {
+                        position = {
+                            x: Math.random() * containerWidth + 30,
+                            y: Math.random() * containerHeight + 30
+                        };
+                        attempts++;
+                    } while (this.tooCloseToOthers(position, positions, minDistance) && attempts < 100);
+
+                    positions.push(position);
+
+                    const dot = document.createElement('div');
+                    dot.className = 'dot';
+                    dot.textContent = i;
+                    dot.style.left = position.x + 'px';
+                    dot.style.top = position.y + 'px';
+                    dot.dataset.number = i;
+                    
+                    dot.addEventListener('click', (e) => this.handleDotClick(e));
+                    
+                    this.gameContainer.appendChild(dot);
+                    this.dots.push(dot);
+                }
+            }
+
+            tooCloseToOthers(newPos, existingPositions, minDistance) {
+                return existingPositions.some(pos => {
+                    const distance = Math.sqrt(
+                        Math.pow(newPos.x - pos.x, 2) + Math.pow(newPos.y - pos.y, 2)
+                    );
+                    return distance < minDistance;
+                });
+            }
+
+            handleDotClick(event) {
+                if (!this.gameActive) return;
+
+                const clickedNumber = parseInt(event.target.dataset.number);
+                
+                // Start timer on first click
+                if (this.currentNumber === 1 && clickedNumber === 1) {
+                    this.startTimer();
+                }
+
+                if (clickedNumber === this.currentNumber) {
+                    // Correct click
+                    event.target.classList.add('clicked');
+                    this.currentNumber++;
+                    this.nextNumberDisplay.textContent = this.currentNumber > 30 ? 'Done!' : this.currentNumber;
+                    
+                    if (this.currentNumber > 30) {
+                        this.endGame();
+                    }
+                } else {
+                    // Wrong click
+                    this.mistakes++;
+                    this.mistakesDisplay.textContent = this.mistakes;
+                    event.target.classList.add('wrong');
+                    
+                    setTimeout(() => {
+                        event.target.classList.remove('wrong');
+                    }, 500);
+                }
+            }
+
+            startTimer() {
+                this.startTime = Date.now();
+                this.timerInterval = setInterval(() => {
+                    const elapsed = (Date.now() - this.startTime) / 1000;
+                    this.timerDisplay.textContent = elapsed.toFixed(1) + 's';
+                }, 100);
+            }
+
+            endGame() {
+                this.endTime = Date.now();
+                this.gameActive = false;
+                clearInterval(this.timerInterval);
+                
+                const totalTime = (this.endTime - this.startTime) / 1000;
+                const grade = this.calculateGrade(totalTime, this.mistakes);
+                
+                this.showResults(totalTime, grade);
+                
+                this.startBtn.disabled = false;
+                this.resetBtn.disabled = true;
+            }
+
+            calculateGrade(time, mistakes) {
+                // Scoring system based on time and accuracy
+                let score = 100;
+                
+                // Time penalties (assuming good time is under 30 seconds)
+                if (time > 60) score -= 30;
+                else if (time > 45) score -= 20;
+                else if (time > 30) score -= 10;
+                else if (time > 20) score -= 5;
+                
+                // Mistake penalties
+                score -= mistakes * 5;
+                
+                // Bonus for perfect run
+                if (mistakes === 0 && time < 20) score += 10;
+                
+                // Determine letter grade
+                if (score >= 95) return 'S';
+                if (score >= 90) return 'A';
+                if (score >= 80) return 'B';
+                if (score >= 70) return 'C';
+                if (score >= 60) return 'D';
+                return 'F';
+            }
+
+            showResults(time, grade) {
+                document.getElementById('finalTime').textContent = time.toFixed(1);
+                document.getElementById('finalMistakes').textContent = this.mistakes;
+                document.getElementById('finalGrade').textContent = grade;
+                document.getElementById('finalGrade').className = `grade ${grade}`;
+                
+                const messages = {
+                    'S': 'Superhuman! You\'re a dot-clicking legend! 🏆',
+                    'A': 'Excellent work! Lightning fast and accurate! ⚡',
+                    'B': 'Great job! You\'ve got good hand-eye coordination! 👍',
+                    'C': 'Not bad! Keep practicing to improve your speed! 🎯',
+                    'D': 'Room for improvement. Try to be more careful! 📈',
+                    'F': 'Keep trying! Practice makes perfect! 💪'
+                };
+                
+                document.getElementById('gradeMessage').textContent = messages[grade];
+                this.results.classList.remove('hidden');
+            }
+
+            resetGame() {
+                this.gameContainer.innerHTML = '';
+                this.currentNumber = 1;
+                this.mistakes = 0;
+                this.gameActive = false;
+                
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                this.timerDisplay.textContent = '0.0s';
+                this.nextNumberDisplay.textContent = '1';
+                this.mistakesDisplay.textContent = '0';
+                
+                this.startBtn.disabled = false;
+                this.resetBtn.disabled = true;
+            }
+        }
+
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new DotSequenceGame();
+        });
+    </script>
+</body>
+</html>
