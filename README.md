@@ -33,9 +33,9 @@ A fast-paced browser game that tests your hand-eye coordination and concentratio
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dot-sequence-challenge.git
+git clone https://github.com/mshen05/dot-sequence-challenge-.git
 
 # Navigate to the project directory
-cd dot-sequence-challenge
+cd dot-sequence-challenge-
 
 # Open index.html in your browser
