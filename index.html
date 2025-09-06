@@ -12,14 +12,14 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, sans-serif;
+            background: white;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            color: white;
+            color: black;
         }
 
         .header {
@@ -28,35 +28,74 @@
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: black;
+        }
+
+        .level-selection {
+            background: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .level-selection h3 {
+            margin-bottom: 15px;
+        }
+
+        .level-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .level-btn {
+            padding: 12px 25px;
+            border: 2px solid black;
+            background: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+            min-width: 120px;
+        }
+
+        .level-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .level-btn.active {
+            background: black;
+            color: white;
         }
 
         .instructions {
-            background: rgba(255,255,255,0.1);
+            background: #f5f5f5;
             padding: 15px;
-            border-radius: 10px;
+            border: 1px solid #ddd;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
             max-width: 600px;
             text-align: center;
         }
 
         .game-stats {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .stat {
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            background: #f0f0f0;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
             font-weight: bold;
+            font-size: 14px;
         }
 
         .game-container {
@@ -65,52 +104,45 @@
             max-width: 800px;
             height: 70vh;
             min-height: 500px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.2);
+            background: white;
+            border: 2px solid black;
             overflow: hidden;
         }
 
         .dot {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            background: #ff6b6b;
+            background: black;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             user-select: none;
         }
 
         .dot:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #333;
         }
 
         .dot.clicked {
-            background: #51cf66;
-            transform: scale(0.8);
-            opacity: 0.7;
+            background: #ccc;
+            color: black;
         }
 
         .dot.wrong {
-            background: #ff5252;
-            animation: shake 0.5s ease-in-out;
+            background: red;
+            animation: shake 0.3s ease-in-out;
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
         }
 
         .controls {
@@ -122,35 +154,36 @@
         }
 
         .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border: 2px solid black;
+            background: white;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: #4ecdc4;
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: black;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: black;
+            color: white;
         }
 
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
+            background: #f5f5f5;
+        }
+
+        .btn:disabled:hover {
+            background: #f5f5f5;
+            color: black;
         }
 
         .results {
             margin-top: 20px;
             padding: 20px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+            background: #f5f5f5;
+            border: 2px solid black;
             text-align: center;
             max-width: 500px;
         }
@@ -159,14 +192,8 @@
             font-size: 3rem;
             font-weight: bold;
             margin: 10px 0;
+            color: black;
         }
-
-        .grade.S { color: #ffd700; }
-        .grade.A { color: #51cf66; }
-        .grade.B { color: #4ecdc4; }
-        .grade.C { color: #ffa94d; }
-        .grade.D { color: #ff6b6b; }
-        .grade.F { color: #ff5252; }
 
         .hidden {
             display: none;
@@ -174,32 +201,56 @@
 
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .dot {
-                width: 35px;
-                height: 35px;
-                font-size: 12px;
+                width: 25px;
+                height: 25px;
+                font-size: 10px;
             }
             
             .game-stats {
-                gap: 15px;
+                gap: 10px;
+            }
+
+            .level-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .level-btn {
+                min-width: 200px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🎯 Dot Sequence Challenge</h1>
+        <h1>Dot Sequence Challenge</h1>
+    </div>
+
+    <div class="level-selection">
+        <h3>Choose Your Challenge</h3>
+        <div class="level-buttons">
+            <button class="level-btn active" data-level="easy">
+                Easy (15 dots)
+            </button>
+            <button class="level-btn" data-level="hard">
+                Hard (30 dots)
+            </button>
+        </div>
     </div>
 
     <div class="instructions">
-        <p>Click the numbered dots in order from 1 to 30 as quickly and accurately as possible!</p>
-        <p>Your time and accuracy will determine your grade.</p>
+        <p id="instructionText">Click the numbered dots in order from 1 to 15. Only 6 dots are visible at a time - each correct click reveals the next dot!</p>
     </div>
 
     <div class="game-stats">
+        <div class="stat">
+            <span>Level: </span>
+            <span id="currentLevel">Easy</span>
+        </div>
         <div class="stat">
             <span>Timer: </span>
             <span id="timer">0.0s</span>
@@ -211,6 +262,10 @@
         <div class="stat">
             <span>Mistakes: </span>
             <span id="mistakes">0</span>
+        </div>
+        <div class="stat">
+            <span>Visible: </span>
+            <span id="visibleCount">0/15</span>
         </div>
     </div>
 
@@ -224,6 +279,7 @@
     <div class="results hidden" id="results">
         <h2>Game Complete!</h2>
         <div class="grade" id="finalGrade">A</div>
+        <p><strong><span id="finalLevel">Easy</span> Level</strong></p>
         <p>Time: <span id="finalTime">0.0</span> seconds</p>
         <p>Mistakes: <span id="finalMistakes">0</span></p>
         <p id="gradeMessage">Excellent work!</p>
@@ -236,17 +292,41 @@
                 this.timerDisplay = document.getElementById('timer');
                 this.nextNumberDisplay = document.getElementById('nextNumber');
                 this.mistakesDisplay = document.getElementById('mistakes');
+                this.visibleCountDisplay = document.getElementById('visibleCount');
+                this.currentLevelDisplay = document.getElementById('currentLevel');
+                this.instructionText = document.getElementById('instructionText');
                 this.startBtn = document.getElementById('startBtn');
                 this.resetBtn = document.getElementById('resetBtn');
                 this.results = document.getElementById('results');
                 
-                this.dots = [];
+                this.allDots = [];
+                this.visibleDots = [];
                 this.currentNumber = 1;
                 this.mistakes = 0;
                 this.startTime = null;
                 this.endTime = null;
                 this.gameActive = false;
                 this.timerInterval = null;
+                this.maxVisible = 6;
+                
+                // Level settings
+                this.levels = {
+                    easy: { 
+                        totalDots: 15, 
+                        name: 'Easy',
+                        perfectTime: 20,
+                        goodTime: 30,
+                        okTime: 45
+                    },
+                    hard: { 
+                        totalDots: 30, 
+                        name: 'Hard',
+                        perfectTime: 35,
+                        goodTime: 50,
+                        okTime: 70
+                    }
+                };
+                this.currentLevel = 'easy';
                 
                 this.initializeEventListeners();
             }
@@ -254,51 +334,78 @@
             initializeEventListeners() {
                 this.startBtn.addEventListener('click', () => this.startGame());
                 this.resetBtn.addEventListener('click', () => this.resetGame());
+                
+                // Level selection buttons
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.selectLevel(e.target.dataset.level));
+                });
+            }
+
+            selectLevel(level) {
+                if (this.gameActive) return; // Can't change level during game
+                
+                this.currentLevel = level;
+                const levelConfig = this.levels[level];
+                
+                // Update UI
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-level="${level}"]`).classList.add('active');
+                
+                this.currentLevelDisplay.textContent = levelConfig.name;
+                this.instructionText.textContent = 
+                    `Click the numbered dots in order from 1 to ${levelConfig.totalDots}. Only 6 dots are visible at a time - each correct click reveals the next dot!`;
+                
+                this.updateVisibleCount();
             }
 
             startGame() {
                 this.resetGame();
-                this.generateDots();
+                this.generateAllDotPositions();
+                this.showInitialDots();
                 this.gameActive = true;
                 this.startBtn.disabled = true;
                 this.resetBtn.disabled = false;
                 this.results.classList.add('hidden');
+                
+                // Disable level selection during game
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.disabled = true;
+                });
             }
 
-            generateDots() {
+            generateAllDotPositions() {
                 const containerRect = this.gameContainer.getBoundingClientRect();
-                const containerWidth = containerRect.width - 60; // Account for dot size and padding
-                const containerHeight = containerRect.height - 60;
-                const minDistance = 60; // Minimum distance between dots
+                const containerWidth = containerRect.width - 40;
+                const containerHeight = containerRect.height - 40;
+                const minDistance = 50;
+                const totalDots = this.levels[this.currentLevel].totalDots;
 
-                this.dots = [];
+                this.allDots = [];
                 const positions = [];
 
-                for (let i = 1; i <= 30; i++) {
+                for (let i = 1; i <= totalDots; i++) {
                     let position;
                     let attempts = 0;
                     
                     do {
                         position = {
-                            x: Math.random() * containerWidth + 30,
-                            y: Math.random() * containerHeight + 30
+                            x: Math.random() * containerWidth + 20,
+                            y: Math.random() * containerHeight + 20
                         };
                         attempts++;
                     } while (this.tooCloseToOthers(position, positions, minDistance) && attempts < 100);
 
                     positions.push(position);
 
-                    const dot = document.createElement('div');
-                    dot.className = 'dot';
-                    dot.textContent = i;
-                    dot.style.left = position.x + 'px';
-                    dot.style.top = position.y + 'px';
-                    dot.dataset.number = i;
-                    
-                    dot.addEventListener('click', (e) => this.handleDotClick(e));
-                    
-                    this.gameContainer.appendChild(dot);
-                    this.dots.push(dot);
+                    this.allDots.push({
+                        number: i,
+                        x: position.x,
+                        y: position.y,
+                        element: null,
+                        visible: false
+                    });
                 }
             }
 
@@ -311,10 +418,41 @@
                 });
             }
 
+            showInitialDots() {
+                const totalDots = this.levels[this.currentLevel].totalDots;
+                const initialCount = Math.min(this.maxVisible, totalDots);
+                
+                for (let i = 0; i < initialCount; i++) {
+                    this.showDot(i);
+                }
+                this.updateVisibleCount();
+            }
+
+            showDot(index) {
+                if (index >= this.allDots.length || this.allDots[index].visible) return;
+
+                const dotData = this.allDots[index];
+                const dot = document.createElement('div');
+                
+                dot.className = 'dot';
+                dot.textContent = dotData.number;
+                dot.style.left = dotData.x + 'px';
+                dot.style.top = dotData.y + 'px';
+                dot.dataset.number = dotData.number;
+                
+                dot.addEventListener('click', (e) => this.handleDotClick(e));
+                
+                this.gameContainer.appendChild(dot);
+                dotData.element = dot;
+                dotData.visible = true;
+                this.visibleDots.push(dotData);
+            }
+
             handleDotClick(event) {
                 if (!this.gameActive) return;
 
                 const clickedNumber = parseInt(event.target.dataset.number);
+                const totalDots = this.levels[this.currentLevel].totalDots;
                 
                 // Start timer on first click
                 if (this.currentNumber === 1 && clickedNumber === 1) {
@@ -325,9 +463,19 @@
                     // Correct click
                     event.target.classList.add('clicked');
                     this.currentNumber++;
-                    this.nextNumberDisplay.textContent = this.currentNumber > 30 ? 'Done!' : this.currentNumber;
                     
-                    if (this.currentNumber > 30) {
+                    // Show next dot if available
+                    if (this.currentNumber <= totalDots) {
+                        const nextDotIndex = this.allDots.findIndex(dot => !dot.visible);
+                        if (nextDotIndex !== -1) {
+                            this.showDot(nextDotIndex);
+                        }
+                    }
+                    
+                    this.nextNumberDisplay.textContent = this.currentNumber > totalDots ? 'Done!' : this.currentNumber;
+                    this.updateVisibleCount();
+                    
+                    if (this.currentNumber > totalDots) {
                         this.endGame();
                     }
                 } else {
@@ -338,8 +486,14 @@
                     
                     setTimeout(() => {
                         event.target.classList.remove('wrong');
-                    }, 500);
+                    }, 300);
                 }
+            }
+
+            updateVisibleCount() {
+                const visibleCount = this.allDots.filter(dot => dot.visible).length;
+                const totalDots = this.levels[this.currentLevel].totalDots;
+                this.visibleCountDisplay.textContent = `${visibleCount}/${totalDots}`;
             }
 
             startTimer() {
@@ -362,23 +516,28 @@
                 
                 this.startBtn.disabled = false;
                 this.resetBtn.disabled = true;
+                
+                // Re-enable level selection
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
             }
 
             calculateGrade(time, mistakes) {
-                // Scoring system based on time and accuracy
+                const levelConfig = this.levels[this.currentLevel];
                 let score = 100;
                 
-                // Time penalties (assuming good time is under 30 seconds)
-                if (time > 60) score -= 30;
-                else if (time > 45) score -= 20;
-                else if (time > 30) score -= 10;
-                else if (time > 20) score -= 5;
+                // Time penalties based on level
+                if (time > levelConfig.okTime + 20) score -= 30;
+                else if (time > levelConfig.okTime) score -= 20;
+                else if (time > levelConfig.goodTime) score -= 10;
+                else if (time > levelConfig.perfectTime) score -= 5;
                 
                 // Mistake penalties
                 score -= mistakes * 5;
                 
                 // Bonus for perfect run
-                if (mistakes === 0 && time < 20) score += 10;
+                if (mistakes === 0 && time < levelConfig.perfectTime) score += 10;
                 
                 // Determine letter grade
                 if (score >= 95) return 'S';
@@ -390,18 +549,20 @@
             }
 
             showResults(time, grade) {
+                const levelConfig = this.levels[this.currentLevel];
+                
                 document.getElementById('finalTime').textContent = time.toFixed(1);
                 document.getElementById('finalMistakes').textContent = this.mistakes;
+                document.getElementById('finalLevel').textContent = levelConfig.name;
                 document.getElementById('finalGrade').textContent = grade;
-                document.getElementById('finalGrade').className = `grade ${grade}`;
                 
                 const messages = {
-                    'S': 'Superhuman! You\'re a dot-clicking legend! 🏆',
-                    'A': 'Excellent work! Lightning fast and accurate! ⚡',
-                    'B': 'Great job! You\'ve got good hand-eye coordination! 👍',
-                    'C': 'Not bad! Keep practicing to improve your speed! 🎯',
-                    'D': 'Room for improvement. Try to be more careful! 📈',
-                    'F': 'Keep trying! Practice makes perfect! 💪'
+                    'S': `Perfect ${levelConfig.name} run! You're a master!`,
+                    'A': `Excellent ${levelConfig.name} performance!`,
+                    'B': `Great job on ${levelConfig.name} level!`,
+                    'C': `Good work! Try the other difficulty!`,
+                    'D': `Not bad! Keep practicing this level!`,
+                    'F': `Keep trying! Master this level first!`
                 };
                 
                 document.getElementById('gradeMessage').textContent = messages[grade];
@@ -410,6 +571,8 @@
 
             resetGame() {
                 this.gameContainer.innerHTML = '';
+                this.allDots = [];
+                this.visibleDots = [];
                 this.currentNumber = 1;
                 this.mistakes = 0;
                 this.gameActive = false;
@@ -418,12 +581,20 @@
                     clearInterval(this.timerInterval);
                 }
                 
+                const totalDots = this.levels[this.currentLevel].totalDots;
+                
                 this.timerDisplay.textContent = '0.0s';
                 this.nextNumberDisplay.textContent = '1';
                 this.mistakesDisplay.textContent = '0';
+                this.visibleCountDisplay.textContent = `0/${totalDots}`;
                 
                 this.startBtn.disabled = false;
                 this.resetBtn.disabled = true;
+                
+                // Re-enable level selection
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
             }
         }
 
